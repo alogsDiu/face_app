@@ -1,0 +1,79 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: #121212  ;
+    color: #E0E0E0;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    /*
+    Background: #121212 (Dark Charcoal)
+    Primary Text: #E0E0E0 (Light Gray)
+    Secondary Text: #B0B0B0 (Gray)
+    Accent Color: #BB86FC (Light Purple) or #03DAC6 (Teal)
+    Buttons and Links: #1F1F1F (Near Black) for background, #BB86FC (Light Purple) for text
+    Error Color: #CF6679 (Light Red)
+    Success Color: #03DAC6 (Teal)
+    */
+}
+.welcomer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.welcomer p{
+    color:#E0E0E0;
+    scale: 2;
+    margin-bottom: 5vh;
+}
+.welcomer p strong{
+    color: #BB86FC;
+}
+.welcomer p strong:hover{
+    cursor: pointer;
+    scale: 3;
+    transition: 500ms;
+}
+.welcomer button{
+    background-color: #1F1F1F;
+    color:#BB86FC;
+    scale: 2.5;
+    border-radius: 20%;
+    border: 0;
+}
+.welcomer button:hover {
+    cursor: pointer;
+    scale: 2.8;
+    background-color: #9A67EA;
+    transition: 500ms;
+}
+
+.about_us{
+    width: 100vw;
+    height: 80vh;
+}
+.about_us h2{
+    margin-left: 5%;
+    margin-bottom: 5%;
+    color: #BB86FC;
+}
+.about_us p{
+    margin-left: 5%;
+    margin-right: 5%;
+    color:#E0E0E0;;
+}
+
+.footer{
+    width: 100vw;
+    height: 20vh;
+}
+.footer p{
+    margin-left: 5%;
+}
+.footer p strong{
+    color: #dc7608;
+}
