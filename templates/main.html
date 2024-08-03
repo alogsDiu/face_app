@@ -6,11 +6,11 @@
     </head>
     <body >
         <div class="welcomer">
-            <p>Embrace the reality <strong onclick="window.location='/reglog'">Face app</strong></p>
-            <button onclick="window.location='/reglog'">Hop In</button>
+            <p>Embrace the reality <strong onclick="hopIn();">Face app</strong></p>
+            <button onclick="hopIn();">Hop In</button>
         </div>
         <div class="about_us">
-            <h2 onclick="window.location='/reglog'">
+            <h2 onclick="hopIn();">
                 Face app
             </h2>
             <p >
@@ -23,5 +23,10 @@
             <p><strong>ig:</strong> @iaMgaY</p>
             <p><strong>Copyright 2024</strong></p>
         </div>
+        <script>
+            function hopIn(){
+                window.location.href = "{% url 'starting' %}";
+            }
+        </script>
     </body>
 </html>
