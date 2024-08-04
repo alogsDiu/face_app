@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import base64
@@ -14,6 +14,7 @@ def starting(request):
     return render(request,"starting.html")
 def registering(request):
     return render(request,"registering.html")
+
 @csrf_exempt
 def finding(request):
     if request.method == 'POST':
@@ -26,8 +27,19 @@ def finding(request):
         # Decode the Base64 string
         image_bytes = base64.b64decode(image_data)
         image = Image.open(BytesIO(image_bytes))
-        image.show()  
-        return JsonResponse({'status': 'success', 'message': 'Image uploaded successfully'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+        name = check(image)
+        if name == "":
+            return render(request,"registering.html",{image_data:image_data})
+        else :
+            token = name
+            return render(request,"home.html",{token:token, name:name})
+    
+    return redirect('starting')
 
+def check(image):
+    allThePics = []
+    for name, pics in allThePics:
+        if pics == image:
+            return name
 
+    return ""
