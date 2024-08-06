@@ -6,5 +6,118 @@
     </head>
     <body>
         
+        <div class="canvasContainer">
+            <canvas id="myCanvas" width="480" height="640"></canvas>
+        </div>
+        <h2 class="questionCont">Do you want to register ?</h2>
+        <div class="buttonsContainer">
+            <button onclick="document.getElementById('agreee').scrollIntoView({ behavior: 'smooth' });">
+                Yes
+            </button>
+            <button onclick="goback()">
+                No
+            </button>
+        </div>
+        <div class="agreement" id="agreee">
+            <h1>Privacy Agreement</h1>
+
+            <p>Welcome to Face App. We are committed to protecting your privacy. This Privacy Agreement outlines how we collect, use, and protect your facial information. Please read this document carefully before using our app.</p>
+            
+            <h2>1. Data Collection</h2>
+            <p>To access Face App, you will need to use your facial features for login and profile identification. We collect facial images and biometric data during the registration and login processes. This data is collected through camera access.</p>
+        
+            <h2>2. Data Use</h2>
+            <p>Your facial data is used to authenticate your identity and create your profile within the app. This data helps us ensure secure access to your account and personalize your experience. We use deepface to process your data.</p>
+        
+            <h2>3. Data Storage</h2>
+            <p>Your facial images and biometric data are stored [location, e.g., on secure servers, in cloud storage]. We retain this data for as long as your account is active. We implement encryption to protect your data from unauthorized access.</p>
+        
+            <h2>4. User Consent</h2>
+            <p>By using Face App, you consent to the collection, use, and processing of your facial data as described in this Privacy Agreement. You can withdraw your consent at any time by  contacting us at sultanoverjan22@gmail.com. Please note that withdrawing consent may affect your ability to use the app.</p>
+        
+            <h2>5. Third-Party Sharing</h2>
+            <p>We do not share your facial data with third parties except as necessary to provide services on our behalf or comply with legal requirements. Any third parties involved in processing your data have their own privacy policies, and we recommend reviewing their policies to understand their data handling practices.</p>
+        
+            <h2>6. User Rights</h2>
+            <p>You have the right to access, correct, or delete your facial data. To request access to or correction of your data, or to request deletion of your data or account, please contact us at [contact information]. For any complaints regarding the handling of your data, please reach out to sultanoverjan22@gmail.com.</p>
+        
+            <h2>7. Legal Compliance</h2>
+            <p>We comply with applicable data protection regulations, including [list regulations if relevant, e.g., GDPR for users in the European Union, CCPA for users in California, etc.]. This Privacy Agreement is governed by the laws of Kazakhstan.</p>
+        
+            <h2>8. Changes to the Agreement</h2>
+            <p>We may update this Privacy Agreement from time to time to reflect changes in our practices or legal requirements. We will notify you of any significant changes by posting a notice in the app. The updated agreement will be effective as of the date it is posted or communicated to you.</p>
+        
+            <p style="margin-bottom: 20px;">By continuing to use Face App, you agree to the terms of this Privacy Agreement. If you do not agree with the terms, please refrain from using the app.</p>
+            <p>
+
+            </p>
+            <form id="image-form" class = "usernameContainer" method="post" action="{% url 'registering' %}">
+                {% csrf_token %}
+                <input type="text" class="username" name="username" placeholder="write a username..." id="inputer" required>
+                {% if user_name_exists %}
+                    <h5 id="username-exists-message" style="color: red; width: 70vw;">
+                        previous username already exists write a new one !
+                    </h5>
+                    <script>
+                        function hideMessage() {
+                            var message = document.getElementById('username-exists-message');
+                            if (message) {
+                                message.style.display = 'none';
+                            }
+                        }
+                        setTimeout(hideMessage, 10000);
+                    </script>
+                {% endif %}
+
+                <input type="hidden"style="display: none;" name="image_data" id="image_data">
+                <button type="submit" id="submit-button" style="display: none;">Upload Image</button>
+            </form>
+            <button class="acceptButton" onclick="sendBack();">Accept</button>
+        </div>
+        <script>
+            window.onload = function() {
+                const canvas = document.getElementById('myCanvas');
+                const context = canvas.getContext('2d');
+
+                // Your Base64 encoded image string (this should be a full Base64 string with data URL)
+                const base64Image = "{{image_data}}";
+
+                // Create an Image object
+                const img = new Image();
+                
+                // Set the crossOrigin attribute if your image is hosted on a different domain
+                // img.crossOrigin = "Anonymous";
+
+                // When the image has loaded, draw it onto the canvas
+                img.onload = function() {
+                    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                
+                // Set the image source to the Base64 string
+                img.src = base64Image;
+                
+                if ("{{user_name_exists}}" === "True") {
+                    document.getElementById('inputer').scrollIntoView({ behavior: 'smooth' });
+                }
+                    
+
+            }
+            function sendBack(){
+                const canvas = document.getElementById('myCanvas');
+                const imageForm = document.getElementById('image-form');
+                const imageDataInput = document.getElementById('image_data');
+                const submitButton = document.getElementById('submit-button');
+                
+                const imageData = canvas.toDataURL('image/png');
+                // Set the image data to the hidden input field
+                imageDataInput.value = imageData;
+
+                // Submit the form
+                submitButton.click();
+            }
+            function goback(){
+                window.location="{% url 'starting' %}";
+            }
+        </script>
     </body>
 </html>

@@ -5,18 +5,22 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/starting.css' %}">
     </head>
     <body>
-        <video id="video" width="640" height="480" autoplay></video>
-        <button onclick="takePic()">GetIn</button>
-        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+        <div class = "videoContainer" >
+            <video id="videoElem" autoplay></video>    
+        </div>
+        <div class="buttonContainer">
+            <button onclick="takePic()" >GetIn</button>
+        </div>
+        <canvas id="canvas" width="480" height="640" style="display: none;"></canvas>
     
-        <form id="image-form" method="post" action="{% url 'authenticating' %}">
+        <form id="image-form" method="post" style="display: none;" action="{% url 'authenticating' %}">
             {% csrf_token %}
-            <input type="hidden" name="image_data" id="image_data">
+            <input type="hidden"style="display: none;" name="image_data" id="image_data">
             <button type="submit" id="submit-button" style="display: none;">Upload Image</button>
         </form>
 
         <script>
-            const video = document.getElementById('video');
+            const video = document.getElementById('videoElem');
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
             const imageForm = document.getElementById('image-form');
@@ -37,7 +41,6 @@
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 // Get the image data as a base64-encoded PNG
                 const imageData = canvas.toDataURL('image/png');
-                
                 // Set the image data to the hidden input field
                 imageDataInput.value = imageData;
 
