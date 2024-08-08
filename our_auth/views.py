@@ -26,12 +26,12 @@ def registering(request):
         # Decode the Base64 string
         image_bytes = base64.b64decode(image_data)
         image = Image.open(BytesIO(image_bytes))
-        
+    
         # Some database stuff
-
+        
         image.save("faces/ex.png")
 
-        return render(request,"i am there assy")
+        return render(request,"home.html",{"token":"someGeneratedToken"})
     return redirect('starting')
 
 @csrf_exempt
@@ -55,15 +55,33 @@ def finding(request):
     
     return redirect('starting')
 
-def check(image):
-    #some database stuff
-    allThePics = []
-    
-    for name, pics in allThePics:
-        if pics == image:
-            return name
 
-    return ""
+from deepface import DeepFace
+import numpy as np
+
+def check(image):
+    
+    #some database stuff
+
+    imageFromDatabase=Image.open('faces/ex.png')
+    
+    if imageFromDatabase == None:
+        return ""
+    
+    image = image.convert('RGB')
+    imageFromDatabase = imageFromDatabase.convert('RGB')
+
+    img1_array = np.array(image)
+    img2_array = np.array(imageFromDatabase)
+
+    # Perform face verification
+    result = DeepFace.verify(img1_array, img2_array, enforce_detection=False)
+
+    if result['verified'] == True:
+        return "imageOwnerNick"
+    else :
+        return ""
+
 def userNameExists(username):
     #some database stuff
     return False
