@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     # GOTTA CONTINUE
-    path('', views.home),
+    path('user/<str:tab_name>/<str:tkn>/', views.load_tab, name="load_tab"),
 ]

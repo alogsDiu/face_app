@@ -5,9 +5,58 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     </head>
     <body>
-        
+        <div class="content">
+
+        </div>
+        <div class="navigation">
+            <h2 class="{{tp}}" onclick="selectElement(this)">
+                TP
+            </h2>
+            <h2 class="{{home}}" onclick="selectElement(this)">
+                Home
+            </h2>
+            <h2 class="{{profile}}" onclick="selectElement(this)">
+                Profile
+            </h2>
+        </div>
+        <script>
+            
+            tkn ="{{token}}"
+
+            fetch(`/user/home/${tkn}/`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error('Content not found');
+                        }
+                    })
+                    .then(html => {
+                        document.querySelector('.content').innerHTML = html;
+                    })
+                    .catch(error => console.error('Error loading content:', error));
+
+            function selectElement(element) {
+                const tabName = element.innerText.toLowerCase();
+
+                const elements = document.querySelectorAll('h2');
+                elements.forEach(el => el.classList.remove('selected'));
+                
+                element.classList.add('selected');
+                // Fetch and load the content based on the tab name
+                fetch(`/user/${tabName}/${tkn}/`)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error('Content not found');
+                        }
+                    })
+                    .then(html => {
+                        document.querySelector('.content').innerHTML = html;
+                    })
+                    .catch(error => console.error('Error loading content:', error));
+            }
+        </script>
     </body>
-    <script>
-        tkn ="{{token}}"
-    </script>
 </html>

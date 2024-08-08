@@ -10,8 +10,10 @@ from io import BytesIO
 # Create your views here.
 def main(request):
     return render(request,"main.html")
+
 def starting(request):
     return render(request,"starting.html")
+
 def registering(request):
     if request.method == 'POST':
         image_data = request.POST.get('image_data')
@@ -29,9 +31,10 @@ def registering(request):
     
         # Some database stuff
         
-        image.save("faces/ex.png")
+        #image.save("faces/ex.png")
 
-        return render(request,"home.html",{"token":"someGeneratedToken"})
+        return render(request,"home.html",{"token":"someGeneratedToken","tp":"","home":"selected","profile":""})
+
     return redirect('starting')
 
 @csrf_exempt
